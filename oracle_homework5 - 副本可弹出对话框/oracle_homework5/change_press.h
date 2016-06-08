@@ -20,13 +20,13 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CString infor_1;
-	CString infor_2;
-	CString infor_3;
-	CString infor_4;
+	CString infor_2,infor_21;
+	CString infor_3,infor_31;
+	CString infor_4,infor_41;
 	bool isbnok = 0;
-	afx_msg void OnEnChangeEdit3();
 	afx_msg void OnEnChangeEdit1();
 	afx_msg void OnEnChangeEdit2();
 	afx_msg void OnEnChangeEdit4();
 	afx_msg void OnBnClickedOk();
+	virtual BOOL OnInitDialog();
 };

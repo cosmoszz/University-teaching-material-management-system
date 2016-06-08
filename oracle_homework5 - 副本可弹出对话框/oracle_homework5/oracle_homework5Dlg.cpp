@@ -131,6 +131,7 @@ BOOL Coracle_homework5Dlg::OnInitDialog()
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
+
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != NULL)
 	{
@@ -368,10 +369,10 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 		}
 		if (str == "ÐÞ¸Ä³ö°æÉç¹ÜÀíÔ±")
 		{
-
 			change_pressadmin run;
 			run.DoModal();
 			str = "";
+			/*
 
 			CString str,str1;
 			//str.Format(_T("delete values from user where username='%s' and userpassword='%s'", run.wanttochange_name,run.wanttochangepwd));
@@ -396,6 +397,8 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 				mysql_query(&mysql, s_copy.c_str());
 				mysql_query(&mysql, s1_copy.c_str());
 			}
+			*/
+			
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
 			str = "";
@@ -514,7 +517,7 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 			run.DoModal();
 			str = "";
 			
-
+			/*
 
 			CString str, str1;
 			//str.Format(_T("delete values from user where username='%s' and userpassword='%s'", run.infor_1, run.infor_2));
@@ -539,6 +542,7 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 				mysql_query(&mysql, s_copy.c_str());
 				mysql_query(&mysql, s1_copy.c_str());
 			}
+			/*/
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
 			
@@ -653,7 +657,7 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 			change_librarian run;
 			run.DoModal();
 			str = "";
-
+			/*
 			CString str, str1;
 			//str.Format(_T("delete values from user where username='%s' and userpassword='%s'", run.infor_1, run.infor_2));
 			str += "delete  from user where username='";
@@ -677,6 +681,7 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 				mysql_query(&mysql, s_copy.c_str());
 				mysql_query(&mysql, s1_copy.c_str());
 			}
+			*/
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
 		}
@@ -791,7 +796,7 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 			change_teacher run;
 			run.DoModal();
 			str = "";
-
+			/*
 			CString str, str1;
 			//str.Format(_T("delete values from user where username='%s' and userpassword='%s'", run.infor_1, run.infor_2));
 			str += "delete  from user where username='";
@@ -817,7 +822,7 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 				mysql_query(&mysql, s1_copy.c_str());
 			}
 
-
+			*/
 			selItem = m_tree.GetParentItem(selItem);//Ñ¡Ôñ»ØÍË¸¸½Úµã
 			m_tree.SelectItem(selItem);
 
@@ -902,6 +907,10 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 			{
 				mysql_query(&mysql, s_copy.c_str());
 				AfxMessageBox(_T("ÐÞ¸Ä³É¹¦"));
+				string s_1;
+				s_1=T2A( run.infor_1);
+				strcpy_s(str_start_name, s_1.size() + 1, s_1.c_str());
+				
 			}
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
@@ -929,6 +938,10 @@ void Coracle_homework5Dlg::OnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//Ï
 			{
 				mysql_query(&mysql, s_copy.c_str());
 				AfxMessageBox(_T("ÐÞ¸Ä³É¹¦"));
+				string s_1;
+				s_1 = T2A(run.infor_1);
+				strcpy_s(str_start_pwd, s_1.size() + 1, s_1.c_str());
+
 			}
 
 			selItem = m_tree.GetParentItem(selItem);

@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "aspect_all_h.h"
 #include <string>
+#include <sstream>
 using namespace std;
 // teacher 对话框
 
@@ -83,10 +84,10 @@ BOOL teacher::OnInitDialog()
 	m_tree.InsertItem(_T("查看订书信息"), 3, 3, hSrc_2);
 
 
-	HTREEITEM hSrc_3 = m_tree.InsertItem(_T("订书"), 0, 0, hRoot);
+	HTREEITEM hSrc_3 = m_tree.InsertItem(_T("征订教材"), 0, 0, hRoot);
 
 
-	m_tree.InsertItem(_T("订购教材"), 3, 3, hSrc_3);
+	m_tree.InsertItem(_T("订书"), 3, 3, hSrc_3);
 
 
 
@@ -142,7 +143,14 @@ void teacher::OnSelchangedteacherTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		str += "'";
 		string s_copy = T2A(str);
 		if (run.isbnok)
+		{
 			mysql_query(&mysql, s_copy.c_str());
+			AfxMessageBox(_T("修改成功"));
+			string s_1;
+			s_1 = T2A(run.infor_1);
+			strcpy_s(str_start_pwd, s_1.size() + 1, s_1.c_str());
+
+		}
 
 		selItem = m_tree.GetParentItem(selItem);
 		m_tree.SelectItem(selItem);
@@ -165,7 +173,14 @@ void teacher::OnSelchangedteacherTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		str += "'";
 		string s_copy = T2A(str);
 		if (run.isbnok)
+		{
 			mysql_query(&mysql, s_copy.c_str());
+			AfxMessageBox(_T("修改成功"));
+			string s_1;
+			s_1 = T2A(run.infor_1);
+			strcpy_s(str_start_name, s_1.size() + 1, s_1.c_str());
+
+		}
 
 		selItem = m_tree.GetParentItem(selItem);
 		m_tree.SelectItem(selItem);
@@ -248,7 +263,7 @@ void teacher::OnSelchangedteacherTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		// 为列表视图控件添加全行选中和栅格风格    
 		m_list.SetExtendedStyle(m_list.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		CString str_1;
-		str_1 += "select *from view_teacher_Look_book_take where book_take_name='";
+		str_1 += "select *from view_teacher_Look_book_take where take_name='";
 		str_1 += str_start_name;
 		str_1 += "'";
 		string s_copy = T2A(str_1);
@@ -313,7 +328,7 @@ void teacher::OnSelchangedteacherTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		// 为列表视图控件添加全行选中和栅格风格    
 		m_list.SetExtendedStyle(m_list.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		CString str_1;
-		str_1 += "select *from view_teacher_Look_book_order where book_order_name='";
+		str_1 += "select *from view_teacher_Look_book_order where order_name='";
 		str_1 += str_start_name;
 		str_1 += "'";
 		string s_copy = T2A(str_1);
@@ -421,18 +436,20 @@ void teacher::OnSelchangedteacherTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		m_tree.SelectItem(selItem);
 	}
 	
-	if (str == "订购教材")
+	if (str == "订书")
 	{
 		teacher_order_book run;
 		run.DoModal();
 		str = "";
 
 		CString str_1, str_2;
+		
+		//插入订书单
 		str_1 += "insert into book_order values (";
-		str_1 += "1,'";
+		str_1 += "1,'";//id
 		str_1 += run.infor_1;
 		str_1 += "','";
-		str_1 += run.infor_2;
+		str_1 += run.infor_2;//
 		str_1 += "','";
 		str_1 += run.infor_3;
 		str_1 += "','";
@@ -442,13 +459,105 @@ void teacher::OnSelchangedteacherTree1(NMHDR *pNMHDR, LRESULT *pResult)
 		str_1 += "',";
 		str_1 += run.infor_6;
 		str_1 += ",";
-		str_1 += run.infor_7;
+		str_1 += run.infor_7;//
 		str_1 += ",0,'";
 		str_1 += str_start_name;
 		str_1 += "')";
-		string s_copy = T2A(str_1);
-		if (run.isbnok)
-			mysql_query(&mysql, s_copy.c_str());
+		//插入取书单
+		str_2 += "insert into book_take values (";
+		str_2 += "1,'";
+		str_2 += run.infor_1;
+		str_2 += "','";
+		str_2 += str_start_name;
+		str_2 += "',";
+		str_2 += run.infor_7;
+		str_2 += ",0)";
+		
+		//判断教材库有没有此书
+		CString str_judge;
+		str_judge += "select * from book where ISBN='";
+		str_judge += run.infor_1;
+		str_judge += "'";
+		string str_judge_copy = T2A(str_judge);
+		mysql_query(&mysql, str_judge_copy.c_str());
+		MYSQL_RES *result = mysql_store_result(&mysql);
+		if (result->row_count == 0)
+		{
+			if (run.isbnok)
+			{
+				AfxMessageBox(_T("教材库中没有此书,将进行购买！"));
+				string s_copy = T2A(str_1);
+				mysql_query(&mysql, s_copy.c_str());
+				AfxMessageBox(_T("订书成功"));
+			}
+		}
+		else
+		{
+			MYSQL_ROW row = NULL;
+			row = mysql_fetch_row(result);
+			int num_judge = atol(row[6]);
+			string s_turn;
+			s_turn = T2A(run.infor_7);
+			int num_teacher_write = atol(s_turn.c_str());
+			if (num_teacher_write > num_judge)
+			{
+				AfxMessageBox(_T("教材库中此书数量不足,将进行购买"));
+				str_1 = "";
+				run.infor_7 = "";
+				int num_1;
+				num_1 = num_teacher_write - num_judge;
+				CString s;
+				s.Format(_T("%d"), num_1);
+
+				run.infor_7+=s;
+				str_1 += "insert into book_order values (";
+				str_1 += "1,'";
+				str_1 += run.infor_1;
+				str_1 += "','";
+				str_1 += run.infor_2;//
+				str_1 += "','";
+				str_1 += run.infor_3;
+				str_1 += "','";
+				str_1 += run.infor_4;
+				str_1 += "','";
+				str_1 += run.infor_5;
+				str_1 += "',";
+				str_1 += run.infor_6;
+				str_1 += ",";
+				str_1 += run.infor_7;//
+				str_1 += ",0,'";
+				str_1 += str_start_name;
+				str_1 += "')";
+
+				///qushu
+				str_2 = "";
+				str_2 += "insert into book_take values (";
+				str_2 += "1,'";
+				str_2 += run.infor_1;
+				str_2 += "','";
+				str_2 += str_start_name;
+				str_2 += "',";
+				str_2 += row[6];
+				str_2 += ",0)";
+				if (run.isbnok)
+				{
+					string s_copy = T2A(str_1);
+					string s_2_copy = T2A(str_2);
+					mysql_query(&mysql, s_copy.c_str());
+					mysql_query(&mysql, s_2_copy.c_str());
+					AfxMessageBox(_T("订书成功"));
+				}
+			}
+			else
+			{
+				if (run.isbnok)
+				{
+					string s_2_copy = T2A(str_2);
+					mysql_query(&mysql, s_2_copy.c_str());
+					AfxMessageBox(_T("取书成功"));
+				}
+			}
+		}
 		selItem = m_tree.GetParentItem(selItem);
 		m_tree.SelectItem(selItem);
 	}

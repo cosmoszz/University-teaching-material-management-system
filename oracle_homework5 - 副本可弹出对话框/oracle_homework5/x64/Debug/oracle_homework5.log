@@ -1,12 +1,8 @@
-﻿生成启动时间为 2016/5/31 20:48:40。
+﻿生成启动时间为 2016/6/6 12:44:28。
      1>项目“C:\Users\隐\Desktop\oracle_homework5 - 副本可弹出对话框\oracle_homework5\oracle_homework5.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         D:\VS\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\MySQL\MySQL Server 5.6\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\oracle_homework5.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt librarian.cpp orderadmin.cpp pressadmin.cpp teacher.cpp
+         D:\VS\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\MySQL\MySQL Server 5.6\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\oracle_homework5.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt teacher.cpp
          teacher.cpp
-         pressadmin.cpp
-         orderadmin.cpp
-         librarian.cpp
-         正在生成代码...
        Link:
          D:\VS\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\隐\Desktop\oracle_homework5 - 副本可弹出对话框\x64\Debug\oracle_homework5.exe" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:D:\VS\VC\Include\Manifest\dpiaware.manifest /DEBUG /PDB:"C:\Users\隐\Desktop\oracle_homework5 - 副本可弹出对话框\x64\Debug\oracle_homework5.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\隐\Desktop\oracle_homework5 - 副本可弹出对话框\x64\Debug\oracle_homework5.lib" /MACHINE:X64 x64\Debug\oracle_homework5.res
          x64\Debug\AddBookShop.obj
@@ -18,22 +14,29 @@
          x64\Debug\add_pressadmin.obj
          x64\Debug\add_teacher.obj
          x64\Debug\change_book.obj
+         x64\Debug\change_book_start.obj
          x64\Debug\change_librarian.obj
          x64\Debug\change_librarianname.obj
          x64\Debug\change_librarianpassword.obj
+         x64\Debug\change_librarian_start.obj
          x64\Debug\change_order.obj
          x64\Debug\change_orderadmin.obj
          x64\Debug\change_orderadminname.obj
          x64\Debug\change_orderadminpassword.obj
+         x64\Debug\change_orderadmin_start.obj
+         x64\Debug\change_order_start.obj
          x64\Debug\change_press.obj
          x64\Debug\change_pressadmin.obj
+         x64\Debug\change_pressadmin_start.obj
          x64\Debug\change_pressname.obj
          x64\Debug\change_presspassword.obj
+         x64\Debug\change_press_start.obj
          x64\Debug\change_sysname.obj
          x64\Debug\change_syspassword.obj
          x64\Debug\change_teacher.obj
          x64\Debug\change_teachername.obj
          x64\Debug\change_teacherpassword.obj
+         x64\Debug\change_teacher_start.obj
          x64\Debug\check.obj
          x64\Debug\del_book.obj
          x64\Debug\del_librarian.obj
@@ -57,4 +60,4 @@
 
 生成成功。
 
-已用时间 00:00:09.77
+已用时间 00:00:19.25

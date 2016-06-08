@@ -21,14 +21,15 @@ protected:
 public:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	CString infor_1;
-	CString infor_2;
-	CString infor_3;
-	CString infor_4;
-	CString infor_5;
-	CString infor_6;
-	CString infor_7;
-	CString infor_8;
-	afx_msg void OnEnChangeEdit1();
+	CString infor_2,infor_21;
+	CString infor_3,infor_31;
+	CString infor_4,infor_41;
+	CString infor_5,infor_51;
+	CString infor_6,infor_61;
+	CString infor_7,infor_71;
+	CString infor_8,infor_81;
+	CString infor_9,infor_91;
+
 	afx_msg void OnEnChangeEdit2();
 	afx_msg void OnEnChangeEdit3();
 	afx_msg void OnEnChangeEdit6();
@@ -38,6 +39,6 @@ public:
 	afx_msg void OnEnChangeEdit10();
 	bool isbnok = 0;
 	afx_msg void OnBnClickedOk();
-	CString infor_9;
 	afx_msg void OnEnChangeEdit11();
+	virtual BOOL OnInitDialog();
 };

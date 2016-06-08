@@ -78,10 +78,10 @@ BOOL librarian::OnInitDialog()
 	m_tree.InsertItem(_T("删除教材"), 3, 3, hSrc_1);
 	m_tree.InsertItem(_T("修改教材"), 3, 3, hSrc_1);
 	m_tree.InsertItem(_T("查看教材"), 3, 3, hSrc_1);
+	m_tree.InsertItem(_T("查看出版社"), 3, 3, hSrc_1);
 
 
 	HTREEITEM hSrc_2 = m_tree.InsertItem(_T("审批教材取书单"), 0, 0, hRoot);
-
 
 	m_tree.InsertItem(_T("已审批"), 3, 3, hSrc_2);
 	m_tree.InsertItem(_T("未审批"), 3, 3, hSrc_2);
@@ -182,6 +182,7 @@ void librarian::OnSelchangedllibrarianTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			run.DoModal();
 			str = "";
 
+			/*
 			CString str, str1;
 			str += "delete   from book where ISBN='";
 			str += run.infor_1;
@@ -212,7 +213,65 @@ void librarian::OnSelchangedllibrarianTree1(NMHDR *pNMHDR, LRESULT *pResult)
 				mysql_query(&mysql, s_copy.c_str());
 				mysql_query(&mysql, s1_copy.c_str());
 			}
+			*/
+			selItem = m_tree.GetParentItem(selItem);
+			m_tree.SelectItem(selItem);
+		}
+		if (str == "查看出版社")
+		{
+			int nCols = m_list.GetHeaderCtrl()->GetItemCount();
+			for (int j = 0; j < nCols; j++)
+			{
+				m_list.DeleteColumn(0);
+			}
+			m_list.DeleteAllItems();
+			str = "";
 
+			CRect rect;
+			// 获取编程语言列表视图控件的位置和大小    
+			m_list.GetClientRect(&rect);
+
+			// 为列表视图控件添加全行选中和栅格风格    
+			m_list.SetExtendedStyle(m_list.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+			mysql_query(&mysql, "select * from press");          //执行SQL语句
+			//mysql_query(&mysql, "insert into press values('西安电子科技大学出版社', '789987', '西安') ");
+			MYSQL_RES *result = mysql_store_result(&mysql);
+			int filedcount = mysql_num_fields(result);//获取字段数
+			MYSQL_ROW row = NULL;//记录
+			MYSQL_FIELD * filed = NULL;//字段
+			static int row_judge = 0;
+
+			while (row = mysql_fetch_row(result))
+			{
+				if (row_judge == 0)
+				{
+					for (int i = 0; i < filedcount; i++)
+					{
+						filed = mysql_fetch_field_direct(result, i);
+						CString str_1, str_2;
+						str_1 = filed->name;
+						str_2 = row[i];
+						m_list.InsertColumn(i, str_1, LVCFMT_CENTER, rect.Width() / filedcount, i);
+						//m_list.InsertItem(i, str_2);
+					}
+				}
+
+				for (int i = 0, j = 0; j < filedcount; i++, j++)
+				{
+					filed = mysql_fetch_field_direct(result, i);
+					CString str_1, str_2;
+					str_1 = filed->name;
+					str_2 = row[i];
+					//m_list.InsertColumn(i, str_1, LVCFMT_CENTER, rect.Width() / filedcount, i);
+					if (j == 0)
+						m_list.InsertItem(row_judge, str_2);
+					else
+						m_list.SetItemText(row_judge, j, str_2);
+
+				}
+				row_judge++;
+			}
+			row_judge = 0;
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
 		}
@@ -412,7 +471,14 @@ void librarian::OnSelchangedllibrarianTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			str += "'";
 			string s_copy = T2A(str);
 			if (run.isbnok)
+			{
 				mysql_query(&mysql, s_copy.c_str());
+				AfxMessageBox(_T("修改成功"));
+				string s_1;
+				s_1 = T2A(run.infor_1);
+				strcpy_s(str_start_pwd, s_1.size() + 1, s_1.c_str());
+
+			}
 
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
@@ -435,7 +501,14 @@ void librarian::OnSelchangedllibrarianTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			str += "'";
 			string s_copy = T2A(str);
 			if (run.isbnok)
+			{
 				mysql_query(&mysql, s_copy.c_str());
+				AfxMessageBox(_T("修改成功"));
+				string s_1;
+				s_1 = T2A(run.infor_1);
+				strcpy_s(str_start_name, s_1.size() + 1, s_1.c_str());
+
+			}
 
 
 			selItem = m_tree.GetParentItem(selItem);
@@ -454,10 +527,14 @@ void librarian::OnRclickList1(NMHDR *pNMHDR, LRESULT *pResult)
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	if (pNMListView->iItem != -1)
 	{
+		int i = pNMListView->iItem;
+		if (m_list.GetItemText(i, 8) == "1" || m_list.GetItemText(i, 4) == "1")
+		{
+			return;
+		}
 		check run;
 		run.DoModal();
-		int i = pNMListView->iItem;
-		if (run.isbnok && (m_list.GetItemText(i, 9) == true || m_list.GetItemText(i, 5) == true))
+		if (run.isbnok && (m_list.GetItemText(i, 8) == "0" || m_list.GetItemText(i, 4) == "0"))
 		{
 			mysql_library_init(NULL, 0, 0);
 			MYSQL mysql;
@@ -471,7 +548,9 @@ void librarian::OnRclickList1(NMHDR *pNMHDR, LRESULT *pResult)
 			USES_CONVERSION;
 
 			CString str;
-			str.Format(_T("update book_take set book_take_check=true where id=%d"), m_list.GetItemText(i, 0));
+			//str.Format(_T("update book_take set book_take_check=1 where id=%d"), m_list.GetItemText(i, 0));
+			str += "update book_take set book_take_check=1 where id=";
+			str += m_list.GetItemText(i, 0);
 			string s_copy = T2A(str);
 			mysql_query(&mysql, s_copy.c_str());
 

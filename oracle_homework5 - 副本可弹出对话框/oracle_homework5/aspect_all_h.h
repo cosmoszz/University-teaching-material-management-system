@@ -1,5 +1,16 @@
 #ifndef _ASPECT_ALL_H
 #define __ASPECT_ALL_H
+#include <string>
+
+
+#include "change_pressadmin_start.h"//修改时获得要修改的职工号
+#include "change_orderadmin_start.h"
+#include "change_librarian_start.h"
+#include "change_teacher_start.h"
+#include "change_book_start.h"
+#include "change_press_start.h"
+#include "change_order_start.h"
+
 
 #include "check.h"//审批
 #include "teacher_order_book.h"//教师订书
@@ -41,4 +52,5 @@
 #include "pressadmin.h"//出版社管理员
 #include "START.h"//登录
 #include "teacher.h"//教师
+using namespace std;
 #endif

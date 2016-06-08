@@ -156,6 +156,27 @@
     <ClInclude Include="del_press.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="change_pressadmin_start.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="change_orderadmin_start.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="change_librarian_start.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="change_teacher_start.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="change_press_start.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="change_order_start.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="change_book_start.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="oracle_homework5.cpp">
@@ -285,6 +306,27 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="del_press.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="change_pressadmin_start.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="change_orderadmin_start.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="change_librarian_start.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="change_teacher_start.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="change_press_start.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="change_order_start.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="change_book_start.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

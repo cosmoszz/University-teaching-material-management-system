@@ -137,7 +137,7 @@ void orderadmin::OnSelchangedorderadminTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			CString str;
 			//str.Format(_T("insert into user values ('%s','%s','%s','%s',%d)", run.infor_1, run.infor_2, run.infor_3, run.infor_4,4));
 			str += "insert into book_order values (";
-			str += "1'";
+			str += "1,'";
 			str += run.infor_1;
 			str += "','";
 			str += run.infor_2;
@@ -170,9 +170,8 @@ void orderadmin::OnSelchangedorderadminTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			run.DoModal();
 			str = "";
 			CString str1;
-			str += "delete   from book_order where id='";
+			str += "delete from book_order where id=";
 			str += run.infor_1;
-			str += "'";
 			string s_copy = T2A(str);
 			if (run.isbnok)
 				mysql_query(&mysql, s_copy.c_str());
@@ -187,15 +186,14 @@ void orderadmin::OnSelchangedorderadminTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			change_order run;
 			run.DoModal();
 			str = "";
-
+			/*
 			CString str1;
-			str += "delete   from book_order where id='";
+			str += "delete   from book_order where id=";
 			str += run.infor_1;
-			str += "'";
 
 			//str.Format(_T("insert into user values ('%s','%s','%s','%s',%d)", run.infor_1, run.infor_2, run.infor_3, run.infor_4, 5));
 			str1 += "insert into book_order values (";
-			str1 += "1'";
+			str1 += "1,'";
 			str1 += run.infor_2;
 			str1 += "','";
 			str1 += run.infor_3;
@@ -212,8 +210,7 @@ void orderadmin::OnSelchangedorderadminTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			str1 += ",0,'";
 			str1 += run.infor_9;
 			str1 += "')";
-
-
+			
 			string s_copy = T2A(str);
 			string s1_copy = T2A(str1);
 			if (run.isbnok)
@@ -221,7 +218,7 @@ void orderadmin::OnSelchangedorderadminTree1(NMHDR *pNMHDR, LRESULT *pResult)
 				mysql_query(&mysql, s_copy.c_str());
 				mysql_query(&mysql, s1_copy.c_str());
 			}
-
+			*/
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
 		}
@@ -413,7 +410,14 @@ void orderadmin::OnSelchangedorderadminTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			str += "'";
 			string s_copy = T2A(str);
 			if (run.isbnok)
+			{
 				mysql_query(&mysql, s_copy.c_str());
+				AfxMessageBox(_T("修改成功"));
+				string s_1;
+				s_1 = T2A(run.infor_1);
+				strcpy_s(str_start_pwd, s_1.size() + 1, s_1.c_str());
+
+			}
 
 
 			selItem = m_tree.GetParentItem(selItem);
@@ -438,7 +442,14 @@ void orderadmin::OnSelchangedorderadminTree1(NMHDR *pNMHDR, LRESULT *pResult)
 			str += "'";
 			string s_copy = T2A(str);
 			if (run.isbnok)
+			{
 				mysql_query(&mysql, s_copy.c_str());
+				AfxMessageBox(_T("修改成功"));
+				string s_1;
+				s_1 = T2A(run.infor_1);
+				strcpy_s(str_start_name, s_1.size() + 1, s_1.c_str());
+
+			}
 
 
 			selItem = m_tree.GetParentItem(selItem);
@@ -513,30 +524,39 @@ void orderadmin::OnRclickList1(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	// TODO:  在此添加控件通知处理程序代码
 	*pResult = 0;
+	mysql_library_init(NULL, 0, 0);
+	MYSQL mysql;
+	mysql_init(&mysql);
+	mysql_options(&mysql, MYSQL_SET_CHARSET_NAME, "gb2312");
+	if (!mysql_real_connect(&mysql, "127.0.0.1", "root", "lovewho?1314", "test", 0, NULL, CLIENT_MULTI_STATEMENTS))//连接数据库
+	{
+		AfxMessageBox(_T("not to connect mysql"));
+		return;
+	}
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	if (pNMListView->iItem != -1)
 	{
+		int i = pNMListView->iItem;
+		if (m_list.GetItemText(i, 8) == "1" || m_list.GetItemText(i, 4) == "1")
+		{
+			return;
+		}
 		check run;
 		run.DoModal();
-		int i = pNMListView->iItem;
-		if (run.isbnok&&(m_list.GetItemText(i,9)==true||m_list.GetItemText(i,5)==true))
-		{
-			mysql_library_init(NULL, 0, 0);
-			MYSQL mysql;
-			mysql_init(&mysql);
-			mysql_options(&mysql, MYSQL_SET_CHARSET_NAME, "gb2312");
-			if (!mysql_real_connect(&mysql, "127.0.0.1", "root", "lovewho?1314", "test", 0, NULL, CLIENT_MULTI_STATEMENTS))//连接数据库
-			{
-				AfxMessageBox(_T("not to connect mysql"));
-				return;
-			}
-			USES_CONVERSION;
-			
-			CString str;
-			str.Format(_T("update book_order set book_order_check=1 where id=%d"),m_list.GetItemText(i,0));
-			string s_copy = T2A(str);
-			mysql_query(&mysql, s_copy.c_str());
+		//MessageBox(m_list.GetItemText(i, 0));
+		//MessageBox(m_list.GetItemText(i, 4));
 
+		USES_CONVERSION;
+
+		CString str;
+		str = "";
+		//str.Format(_T("update book_order set book_order_check=1 where id=%d"),m_list.GetItemText(i,0));
+		str += "update book_order set book_order_check=1 where id=";
+		str += m_list.GetItemText(i, 0);
+		string s_copy = T2A(str);
+		if (run.isbnok)
+		{
+			mysql_query(&mysql, s_copy.c_str());
 		}
 		/*
 		int i = pNMListView->iItem;

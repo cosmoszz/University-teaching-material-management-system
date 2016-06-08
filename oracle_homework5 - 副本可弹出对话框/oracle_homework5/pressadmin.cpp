@@ -96,7 +96,7 @@ void pressadmin::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//出版社管
 
 			CString str;
 			//str.Format(_T("delete values from user where username='%s' and userpassword='%s'",run.pressadmin_name,run.pressadmin_pwd));
-			str += "delete  from press where pressname='";
+			str += "delete  from press where p_name='";
 			str += run.infor_1;
 			str += "'";
 
@@ -113,6 +113,7 @@ void pressadmin::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//出版社管
 			change_press run;
 			run.DoModal();
 			str = "";
+			/*
 			CString str, str1;
 			//str.Format(_T("delete values from user where username='%s' and userpassword='%s'", run.wanttochange_name,run.wanttochangepwd));
 			str += "delete  from press where pressname='";
@@ -134,6 +135,7 @@ void pressadmin::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//出版社管
 				mysql_query(&mysql, s_copy.c_str());
 				mysql_query(&mysql, s1_copy.c_str());
 			}
+			*/ 
 
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
@@ -214,7 +216,14 @@ void pressadmin::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//出版社管
 			str += "'";
 			string s_copy = T2A(str);
 			if (run.isbnok)
+			{
 				mysql_query(&mysql, s_copy.c_str());
+				AfxMessageBox(_T("修改成功"));
+				string s_1;
+				s_1 = T2A(run.infor_1);
+				strcpy_s(str_start_pwd, s_1.size() + 1, s_1.c_str());
+
+			}
 
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);
@@ -237,7 +246,14 @@ void pressadmin::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)//出版社管
 			str += "'";
 			string s_copy = T2A(str);
 			if (run.isbnok)
+			{
 				mysql_query(&mysql, s_copy.c_str());
+				AfxMessageBox(_T("修改成功"));
+				string s_1;
+				s_1 = T2A(run.infor_1);
+				strcpy_s(str_start_name, s_1.size() + 1, s_1.c_str());
+
+			}
 
 			selItem = m_tree.GetParentItem(selItem);
 			m_tree.SelectItem(selItem);

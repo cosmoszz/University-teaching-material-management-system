@@ -23,4 +23,6 @@ public:
 	afx_msg void OnEnChangeEdit2();
 	bool isbnok = 0;
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnEnChangeEdit3();
+	CString infor_2;
 };

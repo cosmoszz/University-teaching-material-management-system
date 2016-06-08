@@ -38,6 +38,7 @@ void add_book::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT7, infor_5);
 	DDX_Text(pDX, IDC_EDIT8, infor_6);
 	DDX_Text(pDX, IDC_EDIT9, infor_7);
+	//DDX_Control(pDX, IDC_STATIC_text1, c_static);
 }
 
 
@@ -154,4 +155,19 @@ void add_book::OnEnChangeEdit9()
 	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
 	GetDlgItemText(IDC_EDIT9, infor_7);
 	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+BOOL add_book::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	/*CFont m_font;
+	m_font.CreatePointFont(200, _T("宋体"),NULL);
+	GetDlgItem(IDC_STATIC)->SetFont(&m_font);
+	GetDlgItem(IDC_STATIC)->SetFont(&m_font);*/
+
+	// TODO:  在此添加额外的初始化
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常:  OCX 属性页应返回 FALSE
 }

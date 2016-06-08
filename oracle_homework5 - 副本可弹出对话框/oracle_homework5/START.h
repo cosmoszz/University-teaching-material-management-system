@@ -26,4 +26,5 @@ public:
 	CString user_pwd;
 	afx_msg void OnEnChangeEdit1();
 	afx_msg void OnEnChangeEdit2();
+	virtual BOOL OnInitDialog();
 };

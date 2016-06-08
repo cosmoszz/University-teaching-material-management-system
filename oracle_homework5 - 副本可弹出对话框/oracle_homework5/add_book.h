@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // add_book ¶Ô»°¿ò
@@ -36,4 +37,7 @@ public:
 	afx_msg void OnEnChangeEdit7();
 	afx_msg void OnEnChangeEdit8();
 	afx_msg void OnEnChangeEdit9();
+	//CStatic m_static;
+	//CFont newfont;
+	virtual BOOL OnInitDialog();
 };

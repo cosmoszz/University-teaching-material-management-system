@@ -178,3 +178,17 @@ void START::OnEnChangeEdit2()
 	GetDlgItemText(IDC_EDIT2, user_pwd);
 
 }
+
+
+BOOL START::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	CFont m_font;
+	m_font.CreatePointFont(180, _T("楷体"), NULL);
+	GetDlgItem(IDC_STATIC)->SetFont(&m_font);
+	GetDlgItem(IDC_STATIC2)->SetFont(&m_font);
+	// TODO:  在此添加额外的初始化
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常:  OCX 属性页应返回 FALSE
+}
